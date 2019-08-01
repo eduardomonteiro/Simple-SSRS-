@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSet Name="DataSet1">
+    <Query>
+      <DataSourceReference>RevenuePerSalesPerson</DataSourceReference>
+      <CommandText>SELECT Sales.Orders.OrderDate, SUM(Sales.OrderLines.Quantity * Sales.OrderLines.UnitPrice) AS OrderRevenue, People.FullName
+FROM Sales.Orders
+INNER JOIN Sales.OrderLines ON Sales.Orders.OrderID = Sales.OrderLines.OrderID
+INNER JOIN Application.People ON Application.People.PersonId = Sales.Orders.SalespersonPersonID
+GROUP BY Orderdate, People.FullName
+ORDER BY FullName, OrderDate</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Date">
+        <DataField>OrderDate</DataField>
+        <rd:TypeName>System.DateTime</rd:TypeName>
+      </Field>
+      <Field Name="Revenue">
+        <DataField>OrderRevenue</DataField>
+        <rd:TypeName>System.Decimal</rd:TypeName>
+      </Field>
+      <Field Name="Salesperson">
+        <DataField>FullName</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>
